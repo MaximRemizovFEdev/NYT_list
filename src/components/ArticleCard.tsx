@@ -1,17 +1,20 @@
 import type { ArchiveDoc } from "../services/nyt";
 import styles from "./ArticleCard.module.css";
+import dayjs from "dayjs";
 
 type Props = {
   doc: ArchiveDoc;
+  imageUrl?: string;
 };
 
 function formatDate(iso?: string) {
   if (!iso) return null;
-  const d = new Date(iso);
-  return isNaN(d.getTime()) ? null : d.toLocaleDateString();
+  const d = dayjs(iso);
+  if (!d.isValid()) return null;
+  return d.format("MMM D, YYYY, h.mm A"); // пример: Feb 26, 2023, 4.32 PM
 }
 
-export default function ArticleCard({ doc }: Props) {
+export default function ArticleCard({ doc, imageUrl }: Props) {
   const date = formatDate(doc.pub_date);
 
   return (
@@ -21,15 +24,25 @@ export default function ArticleCard({ doc }: Props) {
       rel="noreferrer"
       className={styles.card}
     >
-      <div className={styles.title}>{doc.headline.main}</div>
+      <div className={styles.thumb}>
+        {imageUrl ? (
+          <img
+            className={styles.image}
+            src={imageUrl}
+            alt={doc.headline.main}
+          />
+        ) : (
+          <div className={styles.placeholder}>Нет изображения</div>
+        )}
+      </div>
 
-      {doc.byline?.original && (
-        <div className={styles.byline}>{doc.byline.original}</div>
-      )}
+      <div className={styles.content}>
+        <div className={styles.title}>{doc.headline.main}</div>
 
-      {doc.abstract && <div className={styles.abstract}>{doc.abstract}</div>}
+        {doc.abstract && <div className={styles.abstract}>{doc.abstract}</div>}
 
-      {date && <div className={styles.meta}>{date}</div>}
+        {date && <div className={styles.meta}>{date}</div>}
+      </div>
     </a>
   );
 }

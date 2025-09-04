@@ -1,35 +1,67 @@
 .card {
-    display: block;
+    display: flex;
+    gap: 12px;
     text-decoration: none;
     color: inherit;
     padding: 12px 0;
     border-bottom: 1px solid #eaeaea;
   }
   
+  .thumb {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+  }
+  
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: #f2f2f2;
+    color: #999;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+  }
+  
+  .content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+  
   .title {
     font-weight: 700;
     font-size: 16px;
     line-height: 1.3;
-  }
-  
-  .byline {
-    margin-top: 6px;
-    font-size: 12px;
-    color: #666;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* до 2 строк */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   
   .abstract {
-    margin-top: 8px;
     font-size: 14px;
     color: #333;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* ограничим до 3 строк */
+    -webkit-line-clamp: 3; /* до 3 строк */
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
   
   .meta {
-    margin-top: 8px;
     font-size: 12px;
     color: #888;
   }
@@ -40,10 +72,7 @@
   }
   
   @media (prefers-color-scheme: dark) {
-    .card {
-      border-bottom-color: #333;
-    }
-    .byline { color: #aaa; }
+    .card { border-bottom-color: #333; }
     .abstract { color: #ddd; }
     .meta { color: #aaa; }
   }

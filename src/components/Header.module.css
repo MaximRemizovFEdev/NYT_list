@@ -1,0 +1,103 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 56px;
+    display: grid;
+    grid-template-columns: 48px 1fr 48px; /* левый блок, центр, правый блок */
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #eaeaea;
+    padding: 0 8px;
+  }
+  
+  .left, .right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .center {
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  
+  .brand {
+    font-size: 18px;
+    color: #111;
+    text-transform: uppercase;
+  }
+  
+  .iconButton {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .iconButton:focus-visible {
+    outline: 3px solid #646cff;
+    outline-offset: 2px;
+  }
+  
+  .burger, .close {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+  }
+  
+  /* Меню-оверлей */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0,0,0,0.5);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  
+  .sheet {
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-rows: 56px 1fr;
+    animation: slideIn 180ms ease-out;
+  }
+  
+  .sheetHeader {
+    height: 56px;
+    display: grid;
+    grid-template-columns: 1fr 48px;
+    align-items: center;
+    padding: 0 8px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .sheetTitle {
+    padding-left: 12px;
+    font-weight: 700;
+  }
+  
+  .sheetContent {
+    padding: 16px;
+    color: #555;
+  }
+  
+  @keyframes slideIn {
+    from { transform: translateY(12px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .header { background: #111; border-bottom-color: #333; }
+    .brand { color: #f2f2f2; }
+    .sheet { background: #181818; }
+    .sheetHeader { border-bottom-color: #282828; }
+    .sheetContent { color: #ccc; }
+  }
