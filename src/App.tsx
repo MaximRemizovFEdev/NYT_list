@@ -1,67 +1,37 @@
 // src/App.tsx
-import { useEffect, useRef, useState } from "react";
-import "./App.css";
+import { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { loadArchive } from "./features/articles/articlesSlice";
-import ArticleCard from "./components/ArticleCard";
-import Header from "./components/Header";
-import { GroupedVirtuoso, VirtuosoHandle } from "react-virtuoso";
-import dayjs from "dayjs";
-import { selectGroups } from "./features/articles/selectors";
-import UpButton from "./components/UpButton";
+import { checkAuth } from "./features/auth/authSlice";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginPage from "./pages/LoginPage";
+import FeedPage from "./pages/FeedPage";
 
 function App() {
   const dispatch = useAppDispatch();
-  const { daysOrder, groupCounts, itemsFlat } = useAppSelector(selectGroups);
-  const { status, error } = useAppSelector((s) => s.articles);
-  const virtuosoRef = useRef<VirtuosoHandle | null>(null);
-  const [showUp, setShowUp] = useState(false);
+  const { status } = useAppSelector(state => state.auth);
 
   useEffect(() => {
-    dispatch(loadArchive({ year: 2025, month: 4 }));
+    dispatch(checkAuth());
   }, [dispatch]);
 
-  if (status === "loading") return <div className="text-center">Загрузка…</div>;
-  if (status === "failed") return <div className="text-center">Ошибка: {error}</div>;
+  if (status === "loading") {
+    return <div style={{ textAlign: 'center', padding: 20 }}>Загрузка...</div>;
+  }
 
   return (
-    <>
-      <Header title="BESIDER" />
-      <div className="app">
-        <div style={{ height: "calc(100dvh - 56px)" }}>
-          <GroupedVirtuoso
-            ref={virtuosoRef}
-            groupCounts={groupCounts}
-            groupContent={(index) => {
-              const d = daysOrder[index];
-              const title =
-                d === "unknown" ? "Без даты" : dayjs(d).format("MMM D, YYYY");
-              return <div className="title-group">News for {title}</div>;
-            }}
-            itemContent={(index) => {
-              const doc = itemsFlat[index];
-              if (!doc) return null;
-              return <ArticleCard doc={doc} />;
-            }}
-            overscan={100}
-            atTopStateChange={(atTop) => setShowUp(!atTop)}
-          />
-          <UpButton
-            visible={showUp}
-            onClick={() =>
-              virtuosoRef.current?.scrollToIndex({
-                index: 0,
-                align: "start",
-                behavior: "smooth",
-              })
-            }
-          />
-        </div>
-        {itemsFlat.length === 0 && status === "succeeded" && (
-          <div>Нет материалов</div>
-        )}
-      </div>
-    </>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route 
+        path="/" 
+        element={
+          <ProtectedRoute>
+            <FeedPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 

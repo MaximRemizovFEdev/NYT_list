@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": 1757105602403,
+      "email": "kek@kek",
+      "password": "123",
+      "createdAt": "2025-09-05T20:53:22.403Z"
+    }
+  ],
+  "refreshTokens": [
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3NTcxMDU2MDI0MDMsImlhdCI6MTc1NzEwNTYwMiwiZXhwIjoxNzU3NzEwNDAyfQ.lJSmP6fiK29nvpSiUAJ7wz1MZMUyRKOG9LGDVuWA8EE",
+      "userId": 1757105602403
+    },
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3NTcxMDU2MDI0MDMsImlhdCI6MTc1NzEwNTk3MiwiZXhwIjoxNzU3NzEwNzcyfQ.3iG4mskNFTahEJnF-et9bg6MzxJwabRQ3JQyVHNKkAc",
+      "userId": 1757105602403
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Test Post 1",
+      "content": "This is a test post",
+      "authorId": 1,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Test Post 2",
+      "content": "Another test post",
+      "authorId": 1,
+      "createdAt": "2024-01-02T00:00:00.000Z"
+    }
+  ],
+  "articles": [
+    {
+      "id": 1,
+      "title": "Sample Article",
+      "content": "Article content here",
+      "authorId": 1,
+      "published": true
+    }
+  ]
+}
