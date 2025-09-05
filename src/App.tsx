@@ -21,8 +21,8 @@ function App() {
     dispatch(loadArchive({ year: 2025, month: 4 }));
   }, [dispatch]);
 
-  if (status === "loading") return <div>Загрузка…</div>;
-  if (status === "failed") return <div>Ошибка: {error}</div>;
+  if (status === "loading") return <div className="text-center">Загрузка…</div>;
+  if (status === "failed") return <div className="text-center">Ошибка: {error}</div>;
 
   return (
     <>
