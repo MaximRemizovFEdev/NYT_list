@@ -11,7 +11,7 @@ function formatDate(iso?: string) {
   if (!iso) return null;
   const d = dayjs(iso);
   if (!d.isValid()) return null;
-  return d.format("MMM D, YYYY, h.mm A"); // пример: Feb 26, 2023, 4.32 PM
+  return d.format("MMM D, YYYY, h.mm A"); // Feb 26, 2023, 4.32 PM
 }
 
 export default function ArticleCard({ doc, imageUrl }: Props) {
@@ -25,10 +25,19 @@ export default function ArticleCard({ doc, imageUrl }: Props) {
       className={styles.card}
     >
       <div className={styles.thumb}>
-        {imageUrl ? (
+        {/* {imageUrl ? (
           <img
             className={styles.image}
             src={imageUrl}
+            alt={doc.headline.main}
+          />
+        ) : (
+          <div className={styles.placeholder}>Нет изображения</div>
+        )} */}
+        {doc?.multimedia && doc?.multimedia[3]?.url ? (
+          <img
+            className={styles.image}
+            src={"https://www.nytimes.com/" + doc?.multimedia[3]?.url}
             alt={doc.headline.main}
           />
         ) : (

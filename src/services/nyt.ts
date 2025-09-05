@@ -7,6 +7,7 @@ export type ArchiveDoc = {
   byline?: { original?: string }
   abstract?: string
   pub_date?: string
+  multimedia?: { url: string }[]
 }
 
 export async function fetchArchive(year: number, month: number) {
