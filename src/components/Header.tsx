@@ -5,6 +5,16 @@ type Props = {
   title?: string;
 };
 
+const MENU_ITEMS = [
+  "SCIENCE",
+  "GENERAL",
+  "ENTERTAINMENT",
+  "TECHNOLOGY",
+  "BUSINESS",
+  "HEALTH",
+  "SPORTS",
+];
+
 export default function Header({ title = "BESIDER" }: Props) {
   const [open, setOpen] = useState(false);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -36,9 +46,30 @@ export default function Header({ title = "BESIDER" }: Props) {
           >
             <span className={styles.burger} aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="6" width="18" height="2" rx="1" fill="currentColor" />
-                <rect x="3" y="11" width="18" height="2" rx="1" fill="currentColor" />
-                <rect x="3" y="16" width="18" height="2" rx="1" fill="currentColor" />
+                <rect
+                  x="3"
+                  y="6"
+                  width="18"
+                  height="2"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="3"
+                  y="11"
+                  width="18"
+                  height="2"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="3"
+                  y="16"
+                  width="18"
+                  height="2"
+                  rx="1"
+                  fill="currentColor"
+                />
               </svg>
             </span>
           </button>
@@ -60,26 +91,39 @@ export default function Header({ title = "BESIDER" }: Props) {
           onClick={() => setOpen(false)}
         >
           <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.sheetHeader}>
-              <div className={styles.sheetTitle}>Меню</div>
-              <button
-                ref={closeBtnRef}
-                type="button"
-                className={styles.iconButton}
-                aria-label="Закрыть меню"
-                onClick={() => setOpen(false)}
-              >
-                <span className={styles.close} aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </button>
-            </div>
+            <button
+              ref={closeBtnRef}
+              type="button"
+              className={styles.closeButton}
+              aria-label="Закрыть меню"
+              onClick={() => setOpen(false)}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M6 6L18 18M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
 
             <div className={styles.sheetContent}>
-              {/* Пока меню пустое */}
-              Пусто. Здесь будет навигация.
+              <nav>
+                <ul className={styles.menuList}>
+                  {MENU_ITEMS.map((item) => (
+                    <li key={item}>
+                      <button
+                        type="button"
+                        className={styles.menuItem}
+                        onClick={() => setOpen(false)}
+                      >
+                        {item}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

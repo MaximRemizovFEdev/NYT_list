@@ -4,100 +4,191 @@
     z-index: 100;
     height: 56px;
     display: grid;
-    grid-template-columns: 48px 1fr 48px; /* левый блок, центр, правый блок */
+    grid-template-columns: 48px 1fr 48px;
+    /* левый блок, центр, правый блок */
     align-items: center;
     background: #fff;
     border-bottom: 1px solid #eaeaea;
     padding: 0 8px;
-  }
-  
-  .left, .right {
+}
+
+.left,
+.right {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .center {
+}
+
+.center {
     text-align: center;
     font-weight: 800;
     letter-spacing: 1px;
-  }
-  
-  .brand {
+}
+
+.brand {
     font-size: 18px;
     color: #111;
     text-transform: uppercase;
-  }
-  
-  .iconButton {
+}
+
+.iconButton {
     appearance: none;
     background: transparent;
     border: none;
     padding: 8px;
     border-radius: 8px;
     cursor: pointer;
-  }
-  
-  .iconButton:focus-visible {
+}
+
+.iconButton:focus-visible {
     outline: 3px solid #646cff;
     outline-offset: 2px;
-  }
-  
-  .burger, .close {
+}
+
+.burger,
+.close {
     width: 24px;
     height: 24px;
     display: inline-block;
-  }
-  
-  /* Меню-оверлей */
-  .overlay {
+}
+
+/* Меню-оверлей */
+.overlay {
     position: fixed;
     inset: 0;
     z-index: 999;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
-  }
-  
-  .sheet {
+}
+
+.sheet {
+    position: relative;
     background: #fff;
     height: 100%;
     width: 100%;
     max-width: 100%;
-    display: grid;
-    grid-template-rows: 56px 1fr;
     animation: slideIn 180ms ease-out;
-  }
-  
-  .sheetHeader {
+}
+
+.sheetHeader {
     height: 56px;
     display: grid;
     grid-template-columns: 1fr 48px;
     align-items: center;
     padding: 0 8px;
     border-bottom: 1px solid #eee;
-  }
-  
-  .sheetTitle {
+}
+
+.sheetTitle {
     padding-left: 12px;
     font-weight: 700;
-  }
-  
-  .sheetContent {
+}
+
+.sheetContent {
+    height: 100%;
     padding: 16px;
     color: #555;
-  }
-  
-  @keyframes slideIn {
-    from { transform: translateY(12px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    .header { background: #111; border-bottom-color: #333; }
-    .brand { color: #f2f2f2; }
-    .sheet { background: #181818; }
-    .sheetHeader { border-bottom-color: #282828; }
-    .sheetContent { color: #ccc; }
-  }
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.closeButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.closeButton:focus-visible {
+    outline: 3px solid #646cff;
+    outline-offset: 2px;
+}
+
+.menuList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.menuItem {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 14px 12px;
+    font-size: 22px;
+    color: inherit;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.menuItem:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.menuItem:focus-visible {
+    outline: 3px solid #646cff;
+    outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .menuItem:hover {
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .sheet {
+        background: #181818;
+    }
+
+    .sheetContent {
+        color: #ccc;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(12px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .header {
+        background: #111;
+        border-bottom-color: #333;
+    }
+
+    .brand {
+        color: #f2f2f2;
+    }
+
+    .sheet {
+        background: #181818;
+    }
+
+    .sheetHeader {
+        border-bottom-color: #282828;
+    }
+
+    .sheetContent {
+        color: #ccc;
+    }
+}
