@@ -1,7 +1,29 @@
 const API_KEY = import.meta.env.VITE_NYT_API_KEY
-const API_BASE = import.meta.env.DEV ? '/api' : 'https://api.nytimes.com/svc'
 
-// Архив NYT: /archive/v1/{year}/{month}.json
+function buildTargetUrl(path: string) {
+  // Полный URL к NYT API (включая api-key)
+  const url = `https://api.nytimes.com/svc${path}${path.includes('?') ? '&' : '?'}api-key=${API_KEY}`
+  return url
+}
+
+async function fetchWithCors(path: string) {
+  const target = buildTargetUrl(path)
+
+  // В dev: идем через локальный Vite-прокси
+  if (import.meta.env.DEV) {
+    const res = await fetch(`/api${path}${path.includes('?') ? '&' : '?'}api-key=${API_KEY}`)
+    if (!res.ok) throw new Error(`NYT API error ${res.status}`)
+    return res.json()
+  }
+
+  // В prod (GitHub Pages): через AllOrigins
+  const proxied = `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`
+  const res = await fetch(proxied)
+  if (!res.ok) throw new Error(`NYT API (proxied) error ${res.status}`)
+  return res.json()
+}
+
+// Типы как были
 export type ArchiveDoc = {
   _id: string
   web_url: string
@@ -12,11 +34,7 @@ export type ArchiveDoc = {
   multimedia?: Array<{ url?: string; subtype?: string }>
 }
 
+// Архив: /archive/v1/{year}/{month}.json
 export async function fetchArchive(year: number, month: number) {
-  const res = await fetch(`${API_BASE}/archive/v1/${year}/${month}.json?api-key=${API_KEY}`)
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`NYT API error ${res.status}: ${text}`)
-  }
-  return res.json() as Promise<{ response: { docs: ArchiveDoc[] } }>
+  return fetchWithCors(`/archive/v1/${year}/${month}.json`) as Promise<{ response: { docs: ArchiveDoc[] } }>
 }
