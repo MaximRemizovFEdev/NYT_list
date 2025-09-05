@@ -12,7 +12,8 @@ async function fetchWithProxy(path: string) {
     return res.json()
   }
   const target = fullNyTimesUrl(path)
-  const url = `${PROXY_BASE}/${encodeURI(target)}`
+  // ВАЖНО: добавляем /proxy/
+  const url = `${PROXY_BASE}/proxy/${target}`
   const res = await fetch(url)
   if (!res.ok) throw new Error(`Proxy error ${res.status}`)
   return res.json()
@@ -29,5 +30,5 @@ export type ArchiveDoc = {
 }
 
 export async function fetchArchive(year: number, month: number) {
-  return fetchWithProxy(`/archive/v1/${year}/${month}.json`) as Promise<{ response: { docs: ArchiveDoc[] } }>
+  return fetchWithProxy(`/archive/v1/${year}/${month}.json`) as Promise<{ response: { docs: any[] } }>
 }
